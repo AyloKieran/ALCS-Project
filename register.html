@@ -1,0 +1,34 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+	<title>Rover Register</title>
+	<link rel="stylesheet" href="api/file/styles.css">
+
+	<center>
+		<div id="padder"></div>
+			<img id ="logo" src="api/img/logo.png">
+			<div id="padder"></div>
+				<div id="inputpanel">
+					<form action="register" method="post">
+ 						<p id="title">Username:</p>
+						<input name="username" id="inputbox" type="text" /></br>
+						<p id="title">First Name:</p>
+						<input name="firstname" id="inputbox" type="text" /></br>
+						<p id="title">Surname:</p>
+						<input name="surname" id="inputbox" type="text" /></br>
+ 						<p id="title">Password:</p>
+						<input name="password" id="inputbox" type="password" /></br>
+						</br>
+						<a href="index">
+   						<input type="button" value="Home" /></a>
+ 						<input value="Register" type="submit" />
+					</form>
+					<p id="error"></p>
+				</div>
+	</center>
+
+<script type="text/javascript">
+	let url = new URL(window.location.href);
+	let searchParams = new URLSearchParams(url.search);
+	document.getElementById("error").innerHTML = searchParams.get('error');
+</script>
+</html>

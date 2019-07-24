@@ -1,0 +1,136 @@
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Rover Control</title>
+  <!-- This loads a code base which makes it possible to record live key strokes and implement functions that allow for the dynamic changing of objects on the page in real time -->
+  <script src="/api/file/jquery-3.3.1.min.js"></script>
+
+<script type="text/javascript">
+  function setCamUrl() {
+	document.getElementById('viewport').src=window.location.hostname + ":8080/?action=stream"
+  };
+
+  function GetRequest(page, content) {
+    var request = false;
+    request = new XMLHttpRequest();
+    request.open('GET','/api/move/' + content,true);
+    request.send();
+		document.getElementById('direction').src="api/img/dir" + content + ".png"
+  };
+
+  function keyPress(code){
+	if (code == 87) {
+		GetRequest("rover", 'forwards');}
+	else if (code == 83) {
+		GetRequest("rover", 'backwards');}
+	else if (code == 65) {
+		GetRequest("rover", 'left');}
+	else if (code == 68) {
+		GetRequest("rover", 'right');}
+	}
+
+	<!-- Both mousedown and touchstart are used on the buttons so that they can support both touchscreen devices and contentional browser inputs concurrently with the same codebase -->
+
+  $(function(){
+    var clicker = $('.clicker');
+    clicker.bind('mousedown touchstart', (function() {
+	    var buttonvalue = this.value;
+      GetRequest("rover", buttonvalue)
+      return false;
+    }));
+
+  $(document).bind('mouseup touchend',(function(){
+    GetRequest("rover", "stop")
+    return false;
+    }));
+  });
+
+var pressed = false;
+$(document).keydown(function(event) {
+	if(!pressed) {
+  	pressed = true;
+		keyPress(event.keyCode);
+	};
+});
+
+$(document).keyup(function(event) {
+	GetRequest("rover", 'stop');
+	pressed = false;
+});
+</script>
+
+<!-- As this page's objects are very different to the other pages, I decided to give it its own style sheet that is built into the page -->
+<style type="text/css">
+  html, body {
+    margin: 0;
+    min-width: 100%;
+    min-height: 100%;}
+  .controls {
+    position:absolute;
+    bottom:0;
+    right:0;
+    border-collapse:collapse;
+    border-spacing:0;}
+  .clicker {
+    background-color: rgba(255, 255, 255, 0.5);
+    width: 110px;
+    height: 110px;
+    border: 1px solid white;
+    font-size: 50;
+    opacity: 0.8;}
+  .clicker:active {
+    background-color: rgba(255, 255, 255, 0.8);}
+  .viewport {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;}
+  #direction {
+    position:absolute;
+    top:0;
+    right:0;
+    width: 200px;
+    opacity: 0.8;}
+  #topbar {
+    position: absolute;
+    height: 40px;
+    background-color: white;
+    top: 0;
+    opacity: 0.5;}
+  #name {
+    margin-top: 10px;
+    margin-left: 8px;
+    margin-right: 8px;}
+  </style>
+</head>
+
+<body onload="setCamUrl()">
+    <img class="viewport" src="http://192.168.0.2:8080/?action=stream" />
+		<div id="topbar">
+			<p id="name"></p>
+		</div>
+    <img id="direction" src="api/img/dirstop.png">
+    <table class="controls">
+      <tr>
+        <th class="CRow">
+					<!-- Preload images in unused space, this will cache them for future use -->
+					<img src="api/img/dirforwards.png" width="0px" height="0px">
+					<img src="api/img/dirbackwards.png" width="0px" height="0px">
+					<img src="api/img/dirleft.png" width="0px" height="0px">
+					<img src="api/img/dirright.png" width="0px" height="0px"></th>
+        <th class="CRow"><button class="clicker" value="forwards"><img src="api/img/up.png"></button></th>
+        <th class="CRow"></th>
+      </tr>
+      <tr>
+        <td class="CRow"><button class="clicker" value="left"><img src="api/img/lt.png"></button></td>
+        <td class="CRow"><button class="clicker" value="backwards"><img src="api/img/dn.png"></button></td>
+        <td class="CRow"><button class="clicker" value="right"><img src="api/img/rt.png"></button></td>
+      </tr>
+    </table>
+
+<script type="text/javascript">
+	let url = new URL(window.location.href);
+	let searchParams = new URLSearchParams(url.search);
+	document.getElementById("name").innerHTML = "You are currently logged in as: <b>" + searchParams.get('name') + "</b> <a href='index'>Sign Out.</a>";
+</script>
+</body>
+</html>

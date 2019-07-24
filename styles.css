@@ -1,0 +1,35 @@
+html {
+		height: 100%;
+		background: url('/api/img/bg.png'); no-repeat center bottom fixed cover;
+		background-size: cover; 
+		}
+#padder {
+		height: 60px;
+	}
+#inputpanel {
+		width: 250px;
+		background-color: grey;
+		padding: 14px;
+		opacity: 0.9;
+		border-radius: 4px;
+	}
+#inputbox {
+		width: 250px;
+	}
+#title {
+		color: white;
+		font-weight: bold;
+		font-family: "Lucida Console", Monaco, monospace;
+	}
+#logo {
+		width: 20%;
+		min-width: 260px;
+	}
+#button {
+		height: 30px;
+		width: 200px;
+		border-radius: 4px;
+	}
+#error {
+		color: darkred;
+	}
