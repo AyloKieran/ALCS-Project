@@ -1,3 +1,4 @@
 # ALCS-Project
 
-There is no documentation with this - use at your own risk. I won't help with any problems.
+A project that achieved 94.5% (A*) at A-Level for Computer Science.
+It is a proof of concept for a remotely controlled rover device to aid in independance for people with limited mobility, developed completely from intial idea to working prototype within 1 month
